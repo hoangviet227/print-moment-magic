@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BangGiaRouteImport } from './routes/bang-gia'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BangGiaRoute = BangGiaRouteImport.update({
+  id: '/bang-gia',
+  path: '/bang-gia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SanPhamRoute = SanPhamRouteImport.update({
@@ -25,27 +31,31 @@ const SanPhamRoute = SanPhamRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
   '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
   '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
   '/san-pham': typeof SanPhamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/san-pham'
+  fullPaths: '/' | '/bang-gia' | '/san-pham'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/san-pham'
-  id: '__root__' | '/' | '/san-pham'
+  to: '/' | '/bang-gia' | '/san-pham'
+  id: '__root__' | '/' | '/bang-gia' | '/san-pham'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BangGiaRoute: typeof BangGiaRoute
   SanPhamRoute: typeof SanPhamRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bang-gia': {
+      id: '/bang-gia'
+      path: '/bang-gia'
+      fullPath: '/bang-gia'
+      preLoaderRoute: typeof BangGiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/san-pham': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BangGiaRoute: BangGiaRoute,
   SanPhamRoute: SanPhamRoute,
 }
 export const routeTree = rootRouteImport
