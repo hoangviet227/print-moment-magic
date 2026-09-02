@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BangGiaRouteImport } from './routes/bang-gia'
+import { Route as SanPhamRouteImport } from './routes/san-pham'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BangGiaRoute = BangGiaRouteImport.update({
+  id: '/bang-gia',
+  path: '/bang-gia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SanPhamRoute = SanPhamRouteImport.update({
+  id: '/san-pham',
+  path: '/san-pham',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/bang-gia' | '/san-pham'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/bang-gia' | '/san-pham'
+  id: '__root__' | '/' | '/bang-gia' | '/san-pham'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BangGiaRoute: typeof BangGiaRoute
+  SanPhamRoute: typeof SanPhamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bang-gia': {
+      id: '/bang-gia'
+      path: '/bang-gia'
+      fullPath: '/bang-gia'
+      preLoaderRoute: typeof BangGiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/san-pham': {
+      id: '/san-pham'
+      path: '/san-pham'
+      fullPath: '/san-pham'
+      preLoaderRoute: typeof SanPhamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BangGiaRoute: BangGiaRoute,
+  SanPhamRoute: SanPhamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
