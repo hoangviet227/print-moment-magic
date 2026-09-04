@@ -21,6 +21,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminSanPhamRouteImport } from './routes/admin.san-pham'
 import { Route as AdminDonHangIndexRouteImport } from './routes/admin.don-hang.index'
 import { Route as AdminDonHangCodeRouteImport } from './routes/admin.don-hang.$code'
+import { Route as ApiPublicCleanupFilesRouteImport } from './routes/api/public/cleanup-files'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +83,11 @@ const AdminDonHangCodeRoute = AdminDonHangCodeRouteImport.update({
   path: '/don-hang/$code',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicCleanupFilesRoute = ApiPublicCleanupFilesRouteImport.update({
+  id: '/api/public/cleanup-files',
+  path: '/api/public/cleanup-files',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
   '/admin/don-hang': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesById {
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/admin/san-pham'
     | '/admin/'
     | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
     | '/admin/don-hang/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/admin/san-pham'
     | '/admin'
     | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
     | '/admin/don-hang'
   id:
     | '__root__'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/admin/san-pham'
     | '/admin/'
     | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
     | '/admin/don-hang/'
   fileRoutesById: FileRoutesById
 }
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   LienHeRoute: typeof LienHeRoute
   SanPhamRoute: typeof SanPhamRoute
   TraCuuRoute: typeof TraCuuRoute
+  ApiPublicCleanupFilesRoute: typeof ApiPublicCleanupFilesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDonHangCodeRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/cleanup-files': {
+      id: '/api/public/cleanup-files'
+      path: '/api/public/cleanup-files'
+      fullPath: '/api/public/cleanup-files'
+      preLoaderRoute: typeof ApiPublicCleanupFilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   LienHeRoute: LienHeRoute,
   SanPhamRoute: SanPhamRoute,
   TraCuuRoute: TraCuuRoute,
+  ApiPublicCleanupFilesRoute: ApiPublicCleanupFilesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
