@@ -19,6 +19,7 @@ import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as TraCuuRouteImport } from './routes/tra-cuu'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminDonHangIndexRouteImport } from './routes/admin.don-hang.index'
+import { Route as AdminDonHangCodeRouteImport } from './routes/admin.don-hang.$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const AdminDonHangIndexRoute = AdminDonHangIndexRouteImport.update({
   path: '/don-hang/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDonHangCodeRoute = AdminDonHangCodeRouteImport.update({
+  id: '/don-hang/$code',
+  path: '/don-hang/$code',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesByTo {
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesById {
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRouteTypes {
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin/'
+    | '/admin/don-hang/$code'
     | '/admin/don-hang/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin'
+    | '/admin/don-hang/$code'
     | '/admin/don-hang'
   id:
     | '__root__'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin/'
+    | '/admin/don-hang/$code'
     | '/admin/don-hang/'
   fileRoutesById: FileRoutesById
 }
@@ -228,16 +240,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDonHangIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/don-hang/$code': {
+      id: '/admin/don-hang/$code'
+      path: '/don-hang/$code'
+      fullPath: '/admin/don-hang/$code'
+      preLoaderRoute: typeof AdminDonHangCodeRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminDonHangCodeRoute: typeof AdminDonHangCodeRoute
   AdminDonHangIndexRoute: typeof AdminDonHangIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminDonHangCodeRoute: AdminDonHangCodeRoute,
   AdminDonHangIndexRoute: AdminDonHangIndexRoute,
 }
 
