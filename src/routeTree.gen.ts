@@ -18,6 +18,7 @@ import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as TraCuuRouteImport } from './routes/tra-cuu'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminSanPhamRouteImport } from './routes/admin.san-pham'
 import { Route as AdminDonHangIndexRouteImport } from './routes/admin.don-hang.index'
 import { Route as AdminDonHangCodeRouteImport } from './routes/admin.don-hang.$code'
 
@@ -66,6 +67,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSanPhamRoute = AdminSanPhamRouteImport.update({
+  id: '/san-pham',
+  path: '/san-pham',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDonHangIndexRoute = AdminDonHangIndexRouteImport.update({
   id: '/don-hang/',
   path: '/don-hang/',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang': typeof AdminDonHangIndexRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
   '/admin/don-hang/': typeof AdminDonHangIndexRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
     | '/admin/'
     | '/admin/don-hang/$code'
     | '/admin/don-hang/'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
     | '/admin'
     | '/admin/don-hang/$code'
     | '/admin/don-hang'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
     | '/admin/'
     | '/admin/don-hang/$code'
     | '/admin/don-hang/'
@@ -233,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/san-pham': {
+      id: '/admin/san-pham'
+      path: '/san-pham'
+      fullPath: '/admin/san-pham'
+      preLoaderRoute: typeof AdminSanPhamRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/don-hang/': {
       id: '/admin/don-hang/'
       path: '/don-hang'
@@ -251,12 +270,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminSanPhamRoute: typeof AdminSanPhamRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminDonHangCodeRoute: typeof AdminDonHangCodeRoute
   AdminDonHangIndexRoute: typeof AdminDonHangIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminSanPhamRoute: AdminSanPhamRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminDonHangCodeRoute: AdminDonHangCodeRoute,
   AdminDonHangIndexRoute: AdminDonHangIndexRoute,

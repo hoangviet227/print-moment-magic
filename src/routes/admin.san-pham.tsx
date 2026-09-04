@@ -91,7 +91,10 @@ function AdminProducts() {
                     disabled={priceMutation.isPending}
                     onClick={() => {
                       const price = Number(value.replace(/\D/g, ""));
-                      if (!Number.isFinite(price)) return toast.error("Giá không hợp lệ");
+                      if (!Number.isFinite(price)) {
+                        toast.error("Giá không hợp lệ");
+                        return;
+                      }
                       priceMutation.mutate({ variantId: v.id, price });
                     }}
                   >
