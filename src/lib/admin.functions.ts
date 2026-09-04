@@ -200,11 +200,11 @@ export const updateOrderStatus = createServerFn({ method: "POST" })
     if (readError) throw new Error(readError.message);
     if (!current) throw new Error("Không tìm thấy đơn hàng.");
 
-    const patch: Record<string, unknown> = {
+    const patch = {
       status: data.status,
       updated_at: new Date().toISOString(),
+      ...(data.status === "completed" ? { completed_at: new Date().toISOString() } : {}),
     };
-    if (data.status === "completed") patch["completed_at"] = new Date().toISOString();
 
     const { error } = await context.supabase.from("orders").update(patch).eq("id", data.orderId);
     if (error) throw new Error(error.message);
@@ -299,9 +299,9 @@ export const updateVariantPrice = createServerFn({ method: "POST" })
     await context.supabase.from("audit_logs").insert({
       actor_id: context.userId,
       action: "variant.price.update",
-      entity: "product_variants",
+      entity_type: "product_variants",
       entity_id: data.variantId,
-      payload_json: { price: data.price },
+      metadata: { price: data.price },
     });
     return { ok: true };
   });
