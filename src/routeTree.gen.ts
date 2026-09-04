@@ -18,6 +18,7 @@ import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as TraCuuRouteImport } from './routes/tra-cuu'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminDonHangIndexRouteImport } from './routes/admin.don-hang.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDonHangIndexRoute = AdminDonHangIndexRouteImport.update({
+  id: '/don-hang/',
+  path: '/don-hang/',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/don-hang': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin/'
+    | '/admin/don-hang/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin'
+    | '/admin/don-hang'
   id:
     | '__root__'
     | '/'
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/san-pham'
     | '/tra-cuu'
     | '/admin/'
+    | '/admin/don-hang/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,15 +221,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/don-hang/': {
+      id: '/admin/don-hang/'
+      path: '/don-hang'
+      fullPath: '/admin/don-hang/'
+      preLoaderRoute: typeof AdminDonHangIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminDonHangIndexRoute: typeof AdminDonHangIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminDonHangIndexRoute: AdminDonHangIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
