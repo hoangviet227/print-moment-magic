@@ -17,6 +17,7 @@ import { Route as HuongDanRouteImport } from './routes/huong-dan'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as TraCuuRouteImport } from './routes/tra-cuu'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,37 +59,44 @@ const TraCuuRoute = TraCuuRouteImport.update({
   path: '/tra-cuu',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/dat-in': typeof DatInRoute
   '/huong-dan': typeof HuongDanRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/bang-gia': typeof BangGiaRoute
   '/dat-in': typeof DatInRoute
   '/huong-dan': typeof HuongDanRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/dat-in': typeof DatInRoute
   '/huong-dan': typeof HuongDanRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,16 +109,17 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/bang-gia'
     | '/dat-in'
     | '/huong-dan'
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -121,11 +130,12 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BangGiaRoute: typeof BangGiaRoute
   DatInRoute: typeof DatInRoute
   HuongDanRoute: typeof HuongDanRoute
@@ -192,12 +202,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TraCuuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   BangGiaRoute: BangGiaRoute,
   DatInRoute: DatInRoute,
   HuongDanRoute: HuongDanRoute,
