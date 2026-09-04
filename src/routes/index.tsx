@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Camera, Clock, MessageCircle, ShieldCheck, Sparkles, Truck } from "lucide-react";
 
-import cover from "@/assets/brand-cover.png";
+import { BRAND_COVER } from "@/lib/assets";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Button } from "@/components/ui/button";
@@ -82,7 +82,7 @@ function HomePage() {
           </div>
           <div className="glass-card overflow-hidden rounded-3xl p-3">
             <img
-              src={cover}
+              src={BRAND_COVER}
               alt="Ảnh in mẫu của Nhà In Thiên Thiên"
               className="w-full rounded-2xl object-cover"
             />

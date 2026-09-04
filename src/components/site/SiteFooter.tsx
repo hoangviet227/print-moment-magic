@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BadgeCheck, Globe, MapPin, MessageCircle } from "lucide-react";
 
-import logo from "@/assets/logo-horizontal.png";
+import { LOGO_HORIZONTAL } from "@/lib/assets";
 import { BRAND } from "@/lib/brand";
 
 export function SiteFooter() {
@@ -9,7 +9,7 @@ export function SiteFooter() {
     <footer className="mt-16 border-t border-border bg-card/60">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3 md:px-6">
         <div>
-          <img src={logo} alt={BRAND.name} className="h-11 w-auto" />
+          <img src={LOGO_HORIZONTAL} alt={BRAND.name} className="h-11 w-auto" />
           <p className="mt-3 text-sm text-muted-foreground">
             {BRAND.slogan} {BRAND.message}
           </p>

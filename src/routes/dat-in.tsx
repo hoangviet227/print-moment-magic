@@ -15,9 +15,9 @@ import { createOrder, createUploadTicket, markFileStatus, submitOrder } from "@/
 import { formatVnd } from "@/lib/brand";
 
 export const Route = createFileRoute("/dat-in")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    product: typeof search.product === "string" ? search.product : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { product?: string } =>
+    typeof search["product"] === "string" ? { product: search["product"] } : {},
+
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions),
   head: () => ({
     meta: [

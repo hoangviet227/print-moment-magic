@@ -10,16 +10,27 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BangGiaRouteImport } from './routes/bang-gia'
 import { Route as DatInRouteImport } from './routes/dat-in'
 import { Route as HuongDanRouteImport } from './routes/huong-dan'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as TraCuuRouteImport } from './routes/tra-cuu'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminSanPhamRouteImport } from './routes/admin.san-pham'
+import { Route as AdminDonHangIndexRouteImport } from './routes/admin.don-hang.index'
+import { Route as AdminDonHangCodeRouteImport } from './routes/admin.don-hang.$code'
+import { Route as ApiPublicCleanupFilesRouteImport } from './routes/api/public/cleanup-files'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BangGiaRoute = BangGiaRouteImport.update({
@@ -52,15 +63,46 @@ const TraCuuRoute = TraCuuRouteImport.update({
   path: '/tra-cuu',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSanPhamRoute = AdminSanPhamRouteImport.update({
+  id: '/san-pham',
+  path: '/san-pham',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDonHangIndexRoute = AdminDonHangIndexRouteImport.update({
+  id: '/don-hang/',
+  path: '/don-hang/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDonHangCodeRoute = AdminDonHangCodeRouteImport.update({
+  id: '/don-hang/$code',
+  path: '/don-hang/$code',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ApiPublicCleanupFilesRoute = ApiPublicCleanupFilesRouteImport.update({
+  id: '/api/public/cleanup-files',
+  path: '/api/public/cleanup-files',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/dat-in': typeof DatInRoute
   '/huong-dan': typeof HuongDanRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
+  '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,27 +112,44 @@ export interface FileRoutesByTo {
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
+  '/admin/don-hang': typeof AdminDonHangIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
   '/dat-in': typeof DatInRoute
   '/huong-dan': typeof HuongDanRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
   '/tra-cuu': typeof TraCuuRoute
+  '/admin/san-pham': typeof AdminSanPhamRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/don-hang/$code': typeof AdminDonHangCodeRoute
+  '/api/public/cleanup-files': typeof ApiPublicCleanupFilesRoute
+  '/admin/don-hang/': typeof AdminDonHangIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/bang-gia'
     | '/dat-in'
     | '/huong-dan'
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
+    | '/admin/'
+    | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
+    | '/admin/don-hang/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,25 +159,38 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
+    | '/admin'
+    | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
+    | '/admin/don-hang'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/bang-gia'
     | '/dat-in'
     | '/huong-dan'
     | '/lien-he'
     | '/san-pham'
     | '/tra-cuu'
+    | '/admin/san-pham'
+    | '/admin/'
+    | '/admin/don-hang/$code'
+    | '/api/public/cleanup-files'
+    | '/admin/don-hang/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BangGiaRoute: typeof BangGiaRoute
   DatInRoute: typeof DatInRoute
   HuongDanRoute: typeof HuongDanRoute
   LienHeRoute: typeof LienHeRoute
   SanPhamRoute: typeof SanPhamRoute
   TraCuuRoute: typeof TraCuuRoute
+  ApiPublicCleanupFilesRoute: typeof ApiPublicCleanupFilesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -128,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bang-gia': {
@@ -172,17 +251,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TraCuuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/san-pham': {
+      id: '/admin/san-pham'
+      path: '/san-pham'
+      fullPath: '/admin/san-pham'
+      preLoaderRoute: typeof AdminSanPhamRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/don-hang/': {
+      id: '/admin/don-hang/'
+      path: '/don-hang'
+      fullPath: '/admin/don-hang/'
+      preLoaderRoute: typeof AdminDonHangIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/don-hang/$code': {
+      id: '/admin/don-hang/$code'
+      path: '/don-hang/$code'
+      fullPath: '/admin/don-hang/$code'
+      preLoaderRoute: typeof AdminDonHangCodeRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/api/public/cleanup-files': {
+      id: '/api/public/cleanup-files'
+      path: '/api/public/cleanup-files'
+      fullPath: '/api/public/cleanup-files'
+      preLoaderRoute: typeof ApiPublicCleanupFilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminSanPhamRoute: typeof AdminSanPhamRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminDonHangCodeRoute: typeof AdminDonHangCodeRoute
+  AdminDonHangIndexRoute: typeof AdminDonHangIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminSanPhamRoute: AdminSanPhamRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminDonHangCodeRoute: AdminDonHangCodeRoute,
+  AdminDonHangIndexRoute: AdminDonHangIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   BangGiaRoute: BangGiaRoute,
   DatInRoute: DatInRoute,
   HuongDanRoute: HuongDanRoute,
   LienHeRoute: LienHeRoute,
   SanPhamRoute: SanPhamRoute,
   TraCuuRoute: TraCuuRoute,
+  ApiPublicCleanupFilesRoute: ApiPublicCleanupFilesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
