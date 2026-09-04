@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Search, UploadCloud, X } from "lucide-react";
 import { useState } from "react";
 
-import logo from "@/assets/logo-horizontal.png";
+import { LOGO_HORIZONTAL } from "@/lib/assets";
 import { Button } from "@/components/ui/button";
 import { BRAND } from "@/lib/brand";
 
@@ -29,7 +29,7 @@ export function SiteHeader() {
         </button>
 
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt={BRAND.name} className="h-9 w-auto md:h-11" />
+          <img src={LOGO_HORIZONTAL} alt={BRAND.name} className="h-9 w-auto md:h-11" />
         </Link>
 
         <nav className="ml-8 hidden items-center gap-7 md:flex">
