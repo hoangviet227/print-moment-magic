@@ -15,8 +15,13 @@ import { createOrder, createUploadTicket, markFileStatus, submitOrder } from "@/
 import { formatVnd } from "@/lib/brand";
 
 export const Route = createFileRoute("/dat-in")({
-  validateSearch: (search: Record<string, unknown>): { product?: string } =>
-    typeof search["product"] === "string" ? { product: search["product"] } : {},
+  validateSearch: (search: Record<string, unknown>): { product?: string; items?: string } => {
+    const out: { product?: string; items?: string } = {};
+    if (typeof search["product"] === "string") out.product = search["product"];
+    if (typeof search["items"] === "string") out.items = search["items"];
+    return out;
+  },
+
 
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions),
   head: () => ({
