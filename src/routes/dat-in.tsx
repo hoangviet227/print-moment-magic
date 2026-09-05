@@ -53,12 +53,25 @@ type FileState = {
   message?: string;
 };
 
+function parseItems(raw?: string): Record<string, number> {
+  if (!raw) return {};
+  const out: Record<string, number> = {};
+  for (const part of raw.split(",")) {
+    const [id, qty] = part.split(":");
+    const n = Number(qty);
+    if (id && Number.isFinite(n) && n > 0) out[id] = Math.min(500, Math.round(n));
+  }
+  return out;
+}
+
 function OrderPage() {
-  const { product: presetSlug } = Route.useSearch();
+  const { product: presetSlug, items: presetItems } = Route.useSearch();
   const { data: products } = useSuspenseQuery(catalogQueryOptions);
 
-  const [step, setStep] = useState(1);
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const initialQuantities = useMemo(() => parseItems(presetItems), [presetItems]);
+  const [step, setStep] = useState(Object.keys(initialQuantities).length ? 2 : 1);
+  const [quantities, setQuantities] = useState<Record<string, number>>(initialQuantities);
+
   const [activeSlug, setActiveSlug] = useState<string>(presetSlug ?? products[0]?.slug ?? "");
 
   const [fullName, setFullName] = useState("");
