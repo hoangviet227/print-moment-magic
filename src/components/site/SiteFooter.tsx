@@ -32,10 +32,7 @@ export function SiteFooter() {
         <div className="space-y-2 text-sm">
           <h3 className="text-base font-bold text-primary">Liên kết</h3>
           <Link to="/san-pham" className="block hover:text-primary">
-            Sản phẩm
-          </Link>
-          <Link to="/san-pham" className="block hover:text-primary">
-            Bảng giá
+            Sản phẩm & bảng giá
           </Link>
           <Link to="/huong-dan" className="block hover:text-primary">
             Hướng dẫn đặt in
