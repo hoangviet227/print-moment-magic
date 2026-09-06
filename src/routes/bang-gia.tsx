@@ -13,22 +13,7 @@ import {
   type CatalogVariant,
 } from "@/lib/catalog.functions";
 import { formatVnd } from "@/lib/brand";
-
-import imgGoLua from "@/assets/prod-anh-go-lua.jpg";
-import imgTrangGuong from "@/assets/prod-trang-guong.jpg";
-import imgAnhThe from "@/assets/prod-anh-the.jpg";
-import imgPhucHoi from "@/assets/prod-phuc-hoi-anh-cu.jpg";
-import imgNamCham from "@/assets/prod-anh-nam-cham.jpg";
-import imgAlbum from "@/assets/prod-album.jpg";
-
-const PRODUCT_IMAGES: Record<string, string> = {
-  "anh-go-lua": imgGoLua,
-  "trang-guong": imgTrangGuong,
-  "anh-the": imgAnhThe,
-  "phuc-hoi-anh-cu": imgPhucHoi,
-  "anh-nam-cham": imgNamCham,
-  album: imgAlbum,
-};
+import { productImage } from "@/lib/product-images";
 
 export const Route = createFileRoute("/bang-gia")({
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions),
@@ -163,7 +148,7 @@ function ProductCard({
 
   const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
   const price = variant ? variantPrice(variant) : null;
-  const image = PRODUCT_IMAGES[product.slug] ?? imgGoLua;
+  const image = productImage(product.slug);
 
   return (
     <article className="glass-card overflow-hidden rounded-3xl">
