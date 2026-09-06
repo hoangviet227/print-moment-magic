@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BRAND } from "@/lib/brand";
 
 const NAV = [
-  { to: "/san-pham", label: "Sản phẩm" },
-  { to: "/bang-gia", label: "Bảng giá" },
+  { to: "/san-pham", label: "Sản phẩm & giá" },
   { to: "/huong-dan", label: "Hướng dẫn" },
   { to: "/lien-he", label: "Liên hệ" },
 ] as const;

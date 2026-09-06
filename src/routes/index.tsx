@@ -149,7 +149,7 @@ function HomePage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="min-h-12 w-full sm:w-auto">
-                <Link to="/bang-gia">Xem bảng giá & đặt mua</Link>
+                <Link to="/san-pham">Xem sản phẩm & bảng giá</Link>
               </Button>
             </div>
 
