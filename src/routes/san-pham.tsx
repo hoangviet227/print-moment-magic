@@ -201,10 +201,10 @@ function ProductTile({ product, onOpen }: { product: CatalogProduct; onOpen: () 
         </h2>
         <p className="mt-1 line-clamp-1 text-xs text-muted-foreground">{product.turnaround_text}</p>
         <p className="mt-2 text-base font-extrabold text-accent sm:text-lg">
-          {from === null ? "Liên hệ" : formatVnd(from)}
           {from === null ? null : (
-            <span className="ml-1 text-[11px] font-medium text-muted-foreground">/ từ</span>
+            <span className="mr-1 text-[11px] font-medium text-muted-foreground">từ</span>
           )}
+          {from === null ? "Liên hệ" : formatVnd(from)}
         </p>
         <p className="mt-0.5 text-[11px] text-muted-foreground">
           {product.variants.length} kích thước
