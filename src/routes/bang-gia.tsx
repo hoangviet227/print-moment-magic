@@ -148,7 +148,7 @@ function ProductCard({
 
   const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
   const price = variant ? variantPrice(variant) : null;
-  const image = PRODUCT_IMAGES[product.slug] ?? imgGoLua;
+  const image = productImage(product.slug);
 
   return (
     <article className="glass-card overflow-hidden rounded-3xl">
